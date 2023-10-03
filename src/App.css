@@ -10,7 +10,6 @@ body{
   justify-content: space-around;
   background-color: skyblue;
 }
-
 .box {
   width: 100px;
   height: 100px;
@@ -24,8 +23,10 @@ body{
   margin-right: 70px;
 
 }
-
 .bgc {
   background-color: rgba(37, 114, 37, 0.603);
   color: white;
+}
+.reverse {
+  background-color: red;
 }

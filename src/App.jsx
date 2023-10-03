@@ -3,28 +3,41 @@ import './App.css';
 
 const App = () => {
   const [selectedBoxes, setSelectedBoxes] = useState([]);
+  const [clickedOrder, setClickedOrder] = useState([]); //add sequence here like [3,2,4,5,1,6] 
+  const [timeoutId, setTimeoutId] = useState(null);
+
   const handleBox = (boxIndex) => {
-    if (!selectedBoxes.includes(boxIndex)) {
-      setSelectedBoxes([...selectedBoxes, boxIndex]);
-      setTimeout(()=>[
-      setSelectedBoxes()
-      ],1000)
-    }
+    clearTimeout(timeoutId); // Clear the previous timeout
+    const updatedSelectedBoxes = [...selectedBoxes, boxIndex];
+    setSelectedBoxes(updatedSelectedBoxes);
+    setClickedOrder([...clickedOrder, boxIndex]);
+
+    const newTimeoutId = setTimeout(() => {
+      setSelectedBoxes([]);
+      setTimeoutId(null);
+    }, 4000);
+
+    setTimeoutId(newTimeoutId);
   };
 
   useEffect(() => {
-    // console.log('Working ');
-    if (selectedBoxes.length > 0) {
+    if (clickedOrder.length > 0) {
       const timer = setTimeout(() => {
-        const copySelectedBoxes = [...selectedBoxes];
-        copySelectedBoxes.forEach((boxIndex) => {
-          const updatedBoxes = selectedBoxes.filter((selectedBox) => selectedBox !== boxIndex);
-          setSelectedBoxes(updatedBoxes);
-        });
-      }, 3000);
-      return () => clearTimeout(timer);
+        const highlightTimer = setInterval(() => {
+          if (clickedOrder.length === 0) {
+            clearInterval(highlightTimer);
+          } else {
+            const nextItem = clickedOrder.pop();
+            setSelectedBoxes([nextItem]);
+          }
+        }, 1000);
+      }, 4000);
+
+      return () => {
+        clearTimeout(timer);
+      };
     }
-  }, [selectedBoxes]);
+  }, [clickedOrder]);
 
   return (
     <div className="App">
@@ -32,15 +45,20 @@ const App = () => {
         return (
           <div
             key={boxIndex}
-            className={`box 
-            ${selectedBoxes.includes(boxIndex) ? 'bgc' : ''}`}
-            onClick={() => handleBox(boxIndex)}
+            className={`box ${selectedBoxes.includes(boxIndex) ? 'bgc' : ''}`}
+            onClick={() => {
+              handleBox(boxIndex);
+              setTimeout(() => {
+                setSelectedBoxes([]);
+              }, 1000);
+            }}
           >
             Item{boxIndex}
           </div>
-        )
+        );
       })}
     </div>
   );
 };
+
 export default App;
