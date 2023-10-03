@@ -1,0 +1,31 @@
+body{
+  background-color: skyblue;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.App {
+  display: flex;
+  justify-content: space-around;
+  background-color: skyblue;
+}
+
+.box {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  border: 3px solid gray;
+  border-radius: 50%;
+  margin-right: 70px;
+
+}
+
+.bgc {
+  background-color: rgba(37, 114, 37, 0.603);
+  color: white;
+}
