@@ -8,7 +8,6 @@ const App = () => {
   const handleBox = (boxIndex) => {
     const updatedSelectedBoxes = [...selectedBoxes, boxIndex];
     setSelectedBoxes(updatedSelectedBoxes);
-    console.log(updatedSelectedBoxes);
     setClickedOrder([...clickedOrder, boxIndex]);
   };
 
@@ -28,6 +27,11 @@ const App = () => {
         clearTimeout(timer);
       };
     }
+    setInterval(()=>{
+      if(clickedOrder.length <= 1){
+        setSelectedBoxes([])
+      }
+    },2000)
   }, [clickedOrder]);
 
   return (
