@@ -4,20 +4,12 @@ import './App.css';
 const App = () => {
   const [selectedBoxes, setSelectedBoxes] = useState([]);
   const [clickedOrder, setClickedOrder] = useState([]); //add sequence here like [3,2,4,5,1,6] 
-  const [timeoutId, setTimeoutId] = useState(null);
 
   const handleBox = (boxIndex) => {
-    clearTimeout(timeoutId); // Clear the previous timeout
     const updatedSelectedBoxes = [...selectedBoxes, boxIndex];
     setSelectedBoxes(updatedSelectedBoxes);
+    console.log(updatedSelectedBoxes);
     setClickedOrder([...clickedOrder, boxIndex]);
-
-    const newTimeoutId = setTimeout(() => {
-      setSelectedBoxes([]);
-      setTimeoutId(null);
-    }, 4000);
-
-    setTimeoutId(newTimeoutId);
   };
 
   useEffect(() => {
@@ -32,7 +24,6 @@ const App = () => {
           }
         }, 1000);
       }, 4000);
-
       return () => {
         clearTimeout(timer);
       };
